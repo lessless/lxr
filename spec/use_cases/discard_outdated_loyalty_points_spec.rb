@@ -1,10 +1,14 @@
 require 'rails_helper'
-require_relative '../../app/use_cases/discard_outdated_loyalty_points'
+# require_relative '../../app/use_cases/discard_outdated_loyalty_points'
 
-RSpec.describe UseCases::DiscardOutdatedLoyaltyPoints do
+RSpec.describe DiscardOutdatedLoyaltyPoints do
   include_examples 'loyalty points'
   it 'runs successfully' do
-    result = described_class.run(user)
+    query     = LoyaltyPointsQuery.new(user)
+    available = query.available
+    expired   = query.expired
+    result = nil
+    expect { result = described_class.run(user) }.to change(query, :available).from(available).to(available - expired)
     expect(result).to be_a_success
   end
 end
