@@ -1,5 +1,4 @@
 class LoyaltyPointsQuery
-
   def initialize(user)
     @user = user
   end
